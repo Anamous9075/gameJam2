@@ -49,10 +49,18 @@ public class GuardCamera : MonoBehaviour
         if (detectedPlayer != null)
         {
             Chase();
+            if(onTargetDetected!=null)
+            {
+                onTargetDetected.Invoke();
+            }
         }
         else
         {
             Rotate();
+            if(onTargetUndetected!=null)
+            {
+                onTargetUndetected.Invoke();
+            }
         }
     }
 
@@ -68,7 +76,7 @@ public class GuardCamera : MonoBehaviour
 
     private void Attack()
     {
-
+        
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -112,5 +120,6 @@ public class GuardCamera : MonoBehaviour
 
             yield return null;
         }
+        Scan();
     }
 }
