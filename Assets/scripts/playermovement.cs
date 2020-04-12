@@ -9,29 +9,22 @@ public class playermovement : MonoBehaviour
     private void Update()
     {
         Move();
+        mouseaim();
     }
 
     public void Move()
     {
 
-        if (Input.GetKey(KeyCode.W))
-        {
-            rb2.MovePosition(rb2.position + Vector2.up * speed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.S))
-        {
-            rb2.MovePosition(rb2.position + Vector2.down * speed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.D))
-        {
-            rb2.MovePosition(rb2.position + Vector2.right * speed * Time.deltaTime);
-        }
-        if (Input.GetKey(KeyCode.A))
-        {
-            rb2.MovePosition(rb2.position + Vector2.left * speed * Time.deltaTime);
+        float _xMove = Input.GetAxisRaw("Horizontal")*speed;
+        float _yMove = Input.GetAxisRaw("Vertical")*speed;
 
-        }
+        rb2.MovePosition(rb2.position + new Vector2(_xMove*Time.deltaTime, _yMove*Time.deltaTime));
     }
 
-
+    public void mouseaim()
+    {
+        var dir = Input.mousePosition - Camera.main.WorldToScreenPoint(rb2.position);
+        var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
+        rb2.rotation = -angle;
+    }
 }
