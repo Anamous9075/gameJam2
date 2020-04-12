@@ -24,11 +24,31 @@ public class Enemy : MonoBehaviour
 
     public bool scanning=true;
     public bool pacing = true;
+    Vector2 movePosition;
+    //For scanning (not implemented fully
+    public float RotationSpeed;
 
-   public float RotationSpeed;
+    //for shooting if player is found
+    public Transform firepoint;
+    public float bulletforce;
+    public float turntoplayerspeed;
+    public GameObject bullet;
 
-
+    public float firingspeed;
+    float fireinterval;
     // Start is called before the first frame update
+
+    public float wanderinterval;
+    public bool wanderer;
+    Vector2 targetpos;
+
+   void  Start()
+    {
+       targetpos = rb2.position;
+        movePosition =transform.position;
+    }
+
+    public float wanderRate;
     void FixedUpdate()
     {
         if (scanning)
@@ -43,7 +63,12 @@ public class Enemy : MonoBehaviour
         {
             scanning = false;
             pacing = false;
+            wanderer = false;
             chase();
+        }
+        if (wanderer)
+        {
+            Wander();
         }
     }
 
@@ -79,8 +104,8 @@ public class Enemy : MonoBehaviour
                 scanright = false;
             }
         }
-        
 
+        
     }
 
     void chase()
@@ -95,10 +120,20 @@ public class Enemy : MonoBehaviour
 
 
         //look at player
-        var dir = player.position - transform.position;
-        var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
-        Quaternion wantedRotation = Quaternion.AngleAxis(angle, -Vector3.forward);
-        transform.rotation = wantedRotation;
+
+            var dir = new Vector2(player.position.x,player.position.y) - rb2.position;
+            var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
+            rb2.MoveRotation(angle);
+
+        //shoot at player
+
+        if (fireinterval < Time.time)
+        {
+            Shoot();
+            fireinterval = Time.time + firingspeed;
+        }
+
+
     }
 
     //Walk to waypoints
@@ -127,4 +162,80 @@ public class Enemy : MonoBehaviour
             }
         }
     }
+
+    void Shoot()
+    {
+        Instantiate(bullet, firepoint.position, firepoint.rotation);
+        Rigidbody2D Bulletrb2 = bullet.GetComponent<Rigidbody2D>();
+        Bulletrb2.AddForce(firepoint.up * bulletforce, ForceMode2D.Impulse);
+    }
+
+    //Move in one of 8 directions every few seconds with a 1/3 chance of staying still
+    void Wander()
+    {
+
+
+        int wandervalue=Random.Range(1, 12);
+
+        if (wanderinterval < Time.time)
+        {
+
+            if (wandervalue == 1)
+            {
+                targetpos.x = rb2.position.x - 2;
+                rb2.rotation = 90;
+            }
+            else if (wandervalue == 2)
+            {
+                targetpos.x = rb2.position.x + 2;
+                rb2.rotation = -90;
+            }
+            else if (wandervalue == 3)
+            {
+                targetpos.y = rb2.position.y - 2;
+                rb2.rotation = 180;
+            }
+            else if (wandervalue == 4)
+            {
+                targetpos.y = rb2.position.y + 2;
+                rb2.rotation = 0;
+            }
+            else if (wandervalue == 5)
+            {
+                targetpos.x = rb2.position.x - 2;
+                targetpos.y = rb2.position.y + 2;
+                rb2.rotation = 45;
+
+            }
+            else if (wandervalue == 6)
+            {
+                targetpos.x = rb2.position.x + 2;
+                targetpos.y = rb2.position.y + 2;
+                rb2.rotation = -45;
+            }
+            else if (wandervalue == 7)
+            {
+                targetpos.x = rb2.position.x + 2;
+                targetpos.y = rb2.position.y - 2;
+                rb2.rotation = -135;
+            }
+            else if (wandervalue == 8)
+            {
+                targetpos.x = rb2.position.x - 2;
+                targetpos.y = rb2.position.y - 2;
+                rb2.rotation = 135;
+            }
+            wanderinterval = wanderRate + Time.time;
+        }
+
+
+        movePosition.x = Mathf.MoveTowards(transform.position.x, targetpos.x, pacespeed * Time.deltaTime);
+        movePosition.y = Mathf.MoveTowards(transform.position.y, targetpos.y - 2, pacespeed * Time.deltaTime);
+
+
+
+        rb2.MovePosition(movePosition);
+    }
+
+
 }
