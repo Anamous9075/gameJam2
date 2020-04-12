@@ -74,11 +74,6 @@ public class GuardCamera : MonoBehaviour
         chasingCoroutine = StartCoroutine(ChaseIE());
     }
 
-    private void Attack()
-    {
-        
-    }
-
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("Player"))
