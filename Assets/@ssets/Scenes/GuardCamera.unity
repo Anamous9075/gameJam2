@@ -576,6 +576,36 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4398590177933875602, guid: 791c0c0a9228c614eaa1bfb0ca6ae351,
+        type: 3}
+      propertyPath: onTargetDetected.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398590177933875602, guid: 791c0c0a9228c614eaa1bfb0ca6ae351,
+        type: 3}
+      propertyPath: onTargetDetected.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398590177933875602, guid: 791c0c0a9228c614eaa1bfb0ca6ae351,
+        type: 3}
+      propertyPath: onTargetDetected.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398590177933875602, guid: 791c0c0a9228c614eaa1bfb0ca6ae351,
+        type: 3}
+      propertyPath: onTargetDetected.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 514765117}
+    - target: {fileID: 4398590177933875602, guid: 791c0c0a9228c614eaa1bfb0ca6ae351,
+        type: 3}
+      propertyPath: onTargetDetected.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: set_probeAnchor
+      objectReference: {fileID: 0}
+    - target: {fileID: 4398590177933875602, guid: 791c0c0a9228c614eaa1bfb0ca6ae351,
+        type: 3}
+      propertyPath: onTargetDetected.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Transform, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 4398590177933875605, guid: 791c0c0a9228c614eaa1bfb0ca6ae351,
         type: 3}
       propertyPath: m_Name
