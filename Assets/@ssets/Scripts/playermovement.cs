@@ -6,6 +6,13 @@ public class playermovement : MonoBehaviour
 {
     public Rigidbody2D rb2;
     public float speed = 3f;
+
+    private void Start()
+    {
+        Physics.gravity = new Vector3(0, 0, 0);
+    }
+
+
     private void Update()
     {
         Move();
@@ -15,10 +22,10 @@ public class playermovement : MonoBehaviour
     public void Move()
     {
 
-        float _xMove = Input.GetAxisRaw("Horizontal")*speed;
-        float _yMove = Input.GetAxisRaw("Vertical")*speed;
+        float _xMove = Input.GetAxisRaw("Horizontal") * speed;
+        float _yMove = Input.GetAxisRaw("Vertical") * speed;
 
-        rb2.MovePosition(rb2.position + new Vector2(_xMove*Time.deltaTime, _yMove*Time.deltaTime));
+        rb2.MovePosition(rb2.position + new Vector2(_xMove * Time.deltaTime, _yMove * Time.deltaTime));
     }
 
     public void mouseaim()

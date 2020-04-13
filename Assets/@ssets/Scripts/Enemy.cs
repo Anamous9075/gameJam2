@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-
+    public GameObject leveldata;
     public Rigidbody2D rb2;
     public float wantedRotation1;
     public float wantedRotation2;
@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     bool playerspotted=false;
     public float scanspeed;
     public float movespeed;
-    Transform player;
+    public Transform player;
 
     public float pacespeed;
 
@@ -59,12 +59,17 @@ public class Enemy : MonoBehaviour
         {
             pace();
         }
+        if (leveldata.GetComponent<Alert>().alerted == true)
+        {
+            playerspotted = true;
+        }
         if (playerspotted)
         {
             scanning = false;
             pacing = false;
             wanderer = false;
             chase();
+            leveldata.GetComponent<Alert>().alerted = true;
         }
         if (wanderer)
         {
@@ -123,7 +128,7 @@ public class Enemy : MonoBehaviour
 
             var dir = new Vector2(player.position.x,player.position.y) - rb2.position;
             var angle = Mathf.Atan2(dir.x, dir.y) * Mathf.Rad2Deg;
-            rb2.MoveRotation(angle);
+            rb2.rotation=-angle;
 
         //shoot at player
 

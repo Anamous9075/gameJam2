@@ -49,7 +49,7 @@ public class GuardCamera : MonoBehaviour
         if (detectedPlayer != null)
         {
             Chase();
-            if(onTargetDetected!=null)
+            if (onTargetDetected != null)
             {
                 onTargetDetected.Invoke();
             }
@@ -57,7 +57,7 @@ public class GuardCamera : MonoBehaviour
         else
         {
             Rotate();
-            if(onTargetUndetected!=null)
+            if (onTargetUndetected != null)
             {
                 onTargetUndetected.Invoke();
             }
